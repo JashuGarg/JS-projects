@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited Colors</title>
+</head>
+
+<body>
+    <h1>Random color Generator</h1>
+    <br><br>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
+<br>
+<p style="font: 900; font-size: larger;">Color is <p class="para"></p></p>
+    
+</body>
+<script>
+    const start = document.getElementById('start')
+    const stop = document.getElementById('stop')
+    const p = document.querySelector('.para')
+    const body = document.body
+    const hex = '0123456789ABCDEF'
+    let interval
+    function changecolor() {
+
+       interval =   setInterval(function () {
+            let color = "#"
+            for (let i = 0; i < 6; i++) {
+                color += hex[Math.floor(Math.random() * 16)]
+            }
+            body.style.backgroundColor = color
+            p.innerHTML = color
+        }, 1000)
+    }
+    
+function stopchangecolor(){
+    clearInterval(interval)
+}
+
+
+start.addEventListener("click",changecolor)
+stop.addEventListener("click",stopchangecolor)
+
+
+</script>
+
+</html>

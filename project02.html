@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+            background-color: antiquewhite;height: 100vh;
+        }
+        .outer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            /* background-color:yellowgreen; */
+            height: 350px;
+            width: 400px;
+        }
+        .timer{
+            background-color: chocolate;
+            border: 4px solid black;
+            height: auto + 10px;
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <div class="outer">
+      <p style="font-size: xx-large;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-style: italic;">   Clock</p>
+    
+<div class="timer">
+<p class="countdown"></p>
+</div>
+    </div>
+</div>
+</body>
+<script>
+    let timer = document.querySelector('.countdown')
+    
+
+    setInterval(function(){
+        let date = new Date()
+        timer.innerHTML = date.toLocaleTimeString()
+    },1000)
+</script>
+</html>

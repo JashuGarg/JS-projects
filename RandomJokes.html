@@ -1,0 +1,63 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chunk Norris</title>
+    <style>
+        body {
+  background-color: #212121;
+  color: aliceblue;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#display-joke {
+  font-size: 22px;
+  font-family: 'Playfair Display', serif;
+}
+
+.btn {
+  padding: 10px;
+  margin-top: 40px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid rgb(234, 205, 210);
+  color: #f3d2d9;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+    </style>
+  </head>
+  <body>
+    <section class="container">
+      <div id="display-joke">Click the button to get a new joke</div>
+      <button class="btn" id="getJoke">Get Joke</button>
+    </section>
+
+    <script >
+        const url = 'https://api.chucknorris.io/jokes/random';
+
+const jokeinput = document.getElementById('display-joke')
+const btn = document.querySelector('.btn')
+btn.addEventListener("click", function () {
+  // Fetch a new joke on every click
+  fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      jokeinput.innerHTML = data.value; // Display the joke
+    })
+    .catch(function (error) {
+      console.error('Error fetching joke:', error);
+      jokeinput.innerHTML = "Failed to load a joke.";
+    });
+})
+    </script>
+  </body>
+</html>
