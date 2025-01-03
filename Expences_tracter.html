@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #4caf50;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0.5rem 0;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    /* Summary Section */
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary div {
+      flex: 1;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .summary div h2 {
+      font-size: 1.2rem;
+      color: #4caf50;
+    }
+
+    .summary div p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0.5rem 0 0;
+    }
+
+    /* Transaction Form Section */
+    .transaction-form {
+      text-align: center;
+    }
+
+    .transaction-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .transaction-form input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .transaction-form button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      color: #fff;
+      background: #4caf50;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .transaction-form button:hover {
+      background: #45a049;
+    }
+
+    /* Transactions Section */
+    .transactions {
+      text-align: left;
+    }
+
+    .transactions ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .transactions li {
+      display: flex;
+      justify-content: space-between;
+      background: #f9f9f9;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Footer Section */
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      background: #4caf50;
+      color: #fff;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Expense Tracker</h1>
+  </header>
+  <main>
+    <!-- Summary Section -->
+    <section class="summary">
+      <div class="balance">
+        <h2>Balance</h2>
+        <p>$
+        <div id="balance">0.00</div>
+        </p>
+      </div>
+      <div class="expense">
+        <h2>Total Expense</h2>
+        <p>$
+        <div id="expense">0.00</div>
+        </p>
+      </div>
+    </section>
+
+    <!-- Add Transaction Section -->
+    <section class="transaction-form">
+      <h3>Add Transaction</h3>
+      <form id="transaction-form">
+        <input type="text" id="description" placeholder="Description" required>
+        <input type="number" id="amount" placeholder="Amount (positive for income, negative for expense)" required>
+        <button type="submit" id="btn">Add Transaction</button>
+      </form>
+    </section>
+
+    <!-- Transaction History Section -->
+    <section class="transactions">
+      <h3>Transaction History</h3>
+      <ul id="transaction-list">
+        <!-- Transactions will appear here -->
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>Expense Tracker &copy; 2025</p>
+  </footer>
+</body>
+<script>
+  const form = document.getElementById("transaction-form")
+  const btn = document.querySelector("#btn")
+  let current = document.getElementById("balance");
+  let exp = document.getElementById("expense");
+  const history = document.getElementById("transaction-list")
+
+  let input = prompt("ENTER YOUR CURRENT BALANCE :")
+  current.innerHTML = input
+
+  function working() {
+    let amount = document.getElementById("amount").value
+    sum(amount)
+    expence(amount)
+  }
+
+
+  function sum(amount) {
+    let num = Number(current.innerText);
+    console.log(num);
+      num += amount;
+    // } else {
+    //   num -= amount;
+    // }
+    current.innerText = num;
+  }
+
+  function expence(amount) {
+    if (amount < 0) {
+      amount = Math.abs(amount)
+      let num = Number(exp.innerText)
+      num += amount
+
+      exp.innerHTML = Math.abs(num)
+    }
+  }
+  function details(description,amount){
+    const transactionItem = document.createElement("li")
+    transactionItem.innerHTML = `
+        <span>${description}</span>
+        <span>${amount > 0 ? "+" : ""}$${amount.toFixed(2)}</span>
+      `;
+      history.appendChild(transactionItem);
+
+  }
+  form.addEventListener("submit", function(){
+    event.preventDefault()
+    const description = document.getElementById("description").value;
+    const amountInput = document.getElementById("amount").value;
+    const amount = parseFloat(amountInput);
+    sum(amount)
+    expence(amount)
+    details(description,amount)
+    form.reset()
+  })
+  
+
+</script>
+
+</html>
