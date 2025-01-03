@@ -1,238 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>
-  <style>
-    /* General Styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f9;
-      color: #333;
-      line-height: 1.6;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Theme Expense Tracker</title>
+    <style>
+        :root {
+            --background: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-pink: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --card-hover: #334155;
+            --input-bg: #334155;
+            --border-color: #475569;
+        }
 
-    header {
-      background: #4caf50;
-      color: #fff;
-      text-align: center;
-      padding: 1rem 0;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
 
-    h1,
-    h2,
-    h3 {
-      margin: 0.5rem 0;
-    }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
 
-    main {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
+        header {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
 
-    section {
-      margin-bottom: 2rem;
-    }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
 
-    /* Summary Section */
-    .summary {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+        .header-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(139, 92, 246, 0.1) 50%,
+                transparent 100%
+            );
+            animation: shine 3s infinite linear;
+            z-index: -1;
+        }
 
-    .summary div {
-      flex: 1;
-      background: #f9f9f9;
-      text-align: center;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        @keyframes shine {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(50%) rotate(360deg); }
+        }
 
-    .summary div h2 {
-      font-size: 1.2rem;
-      color: #4caf50;
-    }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .summary div p {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 0.5rem 0 0;
-    }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-    /* Transaction Form Section */
-    .transaction-form {
-      text-align: center;
-    }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
 
-    .transaction-form form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+        .summary-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
 
-    .transaction-form input {
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            background: var(--card-hover);
+        }
 
-    .transaction-form button {
-      padding: 0.5rem;
-      font-size: 1rem;
-      color: #fff;
-      background: #4caf50;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+        .summary-card h2 {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
 
-    .transaction-form button:hover {
-      background: #45a049;
-    }
+        .summary-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    /* Transactions Section */
-    .transactions {
-      text-align: left;
-    }
+        .transaction-form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
 
-    .transactions ul {
-      list-style: none;
-      padding: 0;
-    }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-    .transactions li {
-      display: flex;
-      justify-content: space-between;
-      background: #f9f9f9;
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
 
-    /* Footer Section */
-    footer {
-      text-align: center;
-      padding: 1rem 0;
-      background: #4caf50;
-      color: #fff;
-      margin-top: 2rem;
-    }
-  </style>
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--input-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .transactions {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .transaction-list {
+            list-style: none;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            animation: slideIn 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: var(--card-hover);
+            transform: scale(1.02);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+        }
+
+        .transaction-amount.positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .transaction-amount.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(1rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 640px) {
+            main {
+                padding: 0 1rem;
+            }
+            
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <h1>Expense Tracker</h1>
-  </header>
-  <main>
-    <!-- Summary Section -->
-    <section class="summary">
-      <div class="balance">
-        <h2>Balance</h2>
-        <p>$
-        <div id="balance">0.00</div>
-        </p>
-      </div>
-      <div class="expense">
-        <h2>Total Expense</h2>
-        <p>$
-        <div id="expense">0.00</div>
-        </p>
-      </div>
-    </section>
+    <header>
+        <div class="header-content">
+            <h1>Expense Tracker</h1>
+            <p>Manage your finances with style</p>
+        </div>
+    </header>
 
-    <!-- Add Transaction Section -->
-    <section class="transaction-form">
-      <h3>Add Transaction</h3>
-      <form id="transaction-form">
-        <input type="text" id="description" placeholder="Description" required>
-        <input type="number" id="amount" placeholder="Amount (positive for income, negative for expense)" required>
-        <button type="submit" id="btn">Add Transaction</button>
-      </form>
-    </section>
+    <main>
+        <section class="summary">
+            <div class="summary-card">
+                <h2>Current Balance</h2>
+                <p>$<div id="balance">0.00</div></p>
+            </div>
+            <div class="summary-card">
+                <h2>Total Expenses</h2>
+                <p>$<div id="expense">0.00</div></p>
+            </div>
+        </section>
 
-    <!-- Transaction History Section -->
-    <section class="transactions">
-      <h3>Transaction History</h3>
-      <ul id="transaction-list">
-        <!-- Transactions will appear here -->
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>Expense Tracker &copy; 2025</p>
-  </footer>
+        <section class="transaction-form">
+            <h2>Add Transaction</h2>
+            <form id="transaction-form">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" placeholder="What's this transaction for?" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="Enter amount (negative for expense)" required>
+                </div>
+                <button type="submit" id="btn">Add Transaction</button>
+            </form>
+        </section>
+
+        <section class="transactions">
+            <h2>Transaction History</h2>
+            <ul id="transaction-list">
+                <!-- Transactions will be added here -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Expense Tracker &copy; 2025</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById("transaction-form")
+        const btn = document.querySelector("#btn")
+        let current = document.getElementById("balance");
+        let exp = document.getElementById("expense");
+        const history = document.getElementById("transaction-list")
+
+        let input = prompt("ENTER YOUR CURRENT BALANCE :")
+        current.innerHTML = input
+
+        function working() {
+            let amount = document.getElementById("amount").value
+            sum(amount)
+            expence(amount)
+        }
+
+
+        function sum(amount) {
+            let num = Number(current.innerText);
+            console.log(num);
+            num += amount;
+            current.innerText = num;
+        }
+
+        function expence(amount) {
+            if (amount < 0) {
+                amount = Math.abs(amount)
+                let num = Number(exp.innerText)
+                num += amount
+
+                exp.innerHTML = Math.abs(num)
+            }
+        }
+        function details(description,amount){
+            const transactionItem = document.createElement("li")
+            transactionItem.innerHTML = `
+                <span>${description}</span>
+                <span>${amount > 0 ? "+" : ""}$${amount.toFixed(2)}</span>
+            `;
+            history.appendChild(transactionItem);
+        }
+        
+        form.addEventListener("submit", function(){
+            event.preventDefault()
+            const description = document.getElementById("description").value;
+            const amountInput = document.getElementById("amount").value;
+            const amount = parseFloat(amountInput);
+            sum(amount)
+            expence(amount)
+            details(description,amount)
+            form.reset()
+        })
+    </script>
 </body>
-<script>
-  const form = document.getElementById("transaction-form")
-  const btn = document.querySelector("#btn")
-  let current = document.getElementById("balance");
-  let exp = document.getElementById("expense");
-  const history = document.getElementById("transaction-list")
-
-  let input = prompt("ENTER YOUR CURRENT BALANCE :")
-  current.innerHTML = input
-
-  function working() {
-    let amount = document.getElementById("amount").value
-    sum(amount)
-    expence(amount)
-  }
-
-
-  function sum(amount) {
-    let num = Number(current.innerText);
-    console.log(num);
-      num += amount;
-    // } else {
-    //   num -= amount;
-    // }
-    current.innerText = num;
-  }
-
-  function expence(amount) {
-    if (amount < 0) {
-      amount = Math.abs(amount)
-      let num = Number(exp.innerText)
-      num += amount
-
-      exp.innerHTML = Math.abs(num)
-    }
-  }
-  function details(description,amount){
-    const transactionItem = document.createElement("li")
-    transactionItem.innerHTML = `
-        <span>${description}</span>
-        <span>${amount > 0 ? "+" : ""}$${amount.toFixed(2)}</span>
-      `;
-      history.appendChild(transactionItem);
-
-  }
-  form.addEventListener("submit", function(){
-    event.preventDefault()
-    const description = document.getElementById("description").value;
-    const amountInput = document.getElementById("amount").value;
-    const amount = parseFloat(amountInput);
-    sum(amount)
-    expence(amount)
-    details(description,amount)
-    form.reset()
-  })
-  
-
-</script>
-
 </html>
