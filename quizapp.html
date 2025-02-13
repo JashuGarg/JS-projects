@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.quiz-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.quiz-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.quiz-question p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.quiz-options button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.quiz-options button:hover {
+    background-color: #0056b3;
+}
+
+.quiz-footer {
+    margin-top: 20px;
+}
+
+#next-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#next-button:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Quiz Time!</h1>
+        </div>
+        <div class="quiz-question">
+            <p id="question">What is the capital of France?</p>
+        </div>
+        <div class="quiz-options">
+            <button class="option">Berlin</button>
+            <button class="option">Madrid</button>
+            <button class="option">Paris</button>
+            <button class="option">Rome</button>
+        </div>
+        <div class="quiz-footer">
+            <button id="next-button">Next Question</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
